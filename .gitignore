@@ -1,0 +1,4 @@
+venv/
+server/node_modules/
+.idea/
+*.log
