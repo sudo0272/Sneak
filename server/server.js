@@ -28,6 +28,18 @@ app.post('/scroll', (req, res) => {
     res.send('OK');
 });
 
+app.post('/press', (req, res) => {
+    fs.appendFileSync(req.connection.remoteAddress + '.log', 'key press ' + req.body.key + '\n');
+
+    res.send('OK');
+});
+
+app.post('/release', (req, res) => {
+    fs.appendFileSync(req.connection.remoteAddress + '.log', 'key release ' + req.body.key + '\n');
+
+    res.send('OK');
+});
+
 app.listen(PORT, () => {
     console.log('RUNNING');
 });

